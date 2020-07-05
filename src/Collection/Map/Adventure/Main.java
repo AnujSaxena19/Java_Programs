@@ -33,6 +33,12 @@ public class Main {
         locations.get(5).addExit("S",1);
         locations.get(5).addExit("W",2);
 
+        Map<String ,String > vocabulary= new HashMap<String, String>();
+        vocabulary.put("Quit","Q");
+        vocabulary.put("North","N");
+        vocabulary.put("South","S");
+        vocabulary.put("West","W");
+        vocabulary.put("East","E");
 
         int loc=1;
         while (true){
@@ -42,13 +48,22 @@ public class Main {
             }
 
             Map<String,Integer> exits=locations.get(loc).getExits();
-            System.out.println("Available exits are ");
+            System.out.print("Available exits are ");
             for(String exit: exits.keySet()){
                 System.out.print(exit+ ",");
             }
             System.out.println();
 
             String direction=sc.nextLine().toUpperCase();
+            if(direction.length()>1){
+                String [] words=direction.split(" ");
+                for(String word:words){
+                    if(vocabulary.containsKey(word)){
+                        direction=vocabulary.get(word);
+                        break;
+                    }
+                }
+            }
             if(!locations.containsKey(direction)) {
                 loc = exits.get(direction);
             }
